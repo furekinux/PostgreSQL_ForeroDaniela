@@ -29,7 +29,8 @@ from oficina;
 
 ```sql
 select ciudad, telefono
-from oficina where pais='España';
+from oficina
+where pais='España';
 ```
 <p>Devuelve:</p>
 
@@ -46,7 +47,8 @@ from oficina where pais='España';
 
 ```sql
 select nombre, apellido1,apellido2, email
-from empleado where codigo_jefe=7;
+from empleado
+where codigo_jefe=7;
 ```
 <p>Devuelve</p>
 
@@ -62,7 +64,8 @@ from empleado where codigo_jefe=7;
 
 ```sql
 select puesto, nombre, apellido1, apellido2, email
-from empleado where puesto='Director General';
+from empleado
+where puesto='Director General';
 ```
 <p>Devuelve</p>
 
@@ -77,7 +80,8 @@ from empleado where puesto='Director General';
 
 ```sql
 select puesto, nombre, apellido1, apellido2, email
-from empleado where puesto!='Representante Ventas';
+from empleado
+where puesto!='Representante Ventas';
 ```
 <p>Devuelve:</p>
 
@@ -101,20 +105,112 @@ from empleado where puesto!='Representante Ventas';
 
 <h3>6. Devuelve un listado con el nombre de los todos los clientes españoles.</h3>
 
+```sql
+select nombre_cliente
+from cliente
+where pais='Spain';
+```
+<p>Devuelve:</p>
 
+```sql
+         nombre_cliente         
+--------------------------------
+ Lasas S.A.
+ Beragua
+ Club Golf Puerta del hierro
+ Naturagua
+ DaraDistribuciones
+ Madrileña de riegos
+ Lasas S.A.
+ Camunas Jardines S.L.
+ Dardena S.A.
+ Jardin de Flores
+ Flores Marivi
+ Flowers, S.A
+ Naturajardin
+ Golf S.A.
+ Americh Golf Management SL
+ Aloha
+ El Prat
+ Sotogrande
+ Vivero Humanes
+ Fuenla City
+ Jardines y Mansiones Cactus SL
+ Jardinerías Matías SL
+ Agrojardin
+ Top Campo
+ Jardineria Sara
+ Campohermoso
+ Flores S.L.
+(27 rows)
+```
 <h3>7. Devuelve un listado con los distintos estados por los que puede pasar un pedido.</h3>
 
+```sql
+select distinct estado
+from pedido;
+```
+<p>Devuelve:</p>
+
+```sql
+  estado   
+-----------
+ Entregado
+ Pendiente
+ Rechazado
+(3 rows)
+```
 <h3>8. Devuelve un listado con el código de cliente de aquellos clientes que realizaron algún pago en 2008. Tenga en cuenta que deberá eliminar aquellos códigos de cliente que aparezcan repetidos. Resuelva la consulta:</h3>
 <ul type="circle">
   <li>Utilizando la función YEAR de MySQL.</li>
+
+        select distinct codigo_cliente from pago
+        where extract(year from fecha_pago) = '2008';
+<p>Devuelve:</p>
+
+         codigo_cliente 
+        ----------------
+                      1
+                     13
+                     14
+                     26
+        (4 rows)
+
   <li>Utilizando la función DATE_FORMAT de MySQL.</li>
+
+        select distinct codigo_cliente from pago
+        where to_char(fecha_pago,'yyyy')  = '2008';
+<p>Devuelve:</p>
+
+         codigo_cliente 
+        ----------------
+                      1
+                     13
+                     14
+                     26
+        (4 rows)
   <li>Sin utilizar ninguna de las funciones anteriores.</li>
+  
+        select distinct codigo_cliente  from pago
+        where fecha_pago between '2008-01-01' and '2008-12-31';
+<p>Devuelve:</p>
+
+         codigo_cliente 
+        ----------------
+                      1
+                     13
+                     14
+                     26
+        (4 rows)
+
 </ul>
 
 <h3>9. Devuelve un listado con el código de pedido, código de cliente, fecha esperada y fecha de entrega de los pedidos que no han sido entregados a tiempo.</h3>
 
 <h3>10. Devuelve un listado con el código de pedido, código de cliente, fecha esperada y fecha de entrega de los pedidos cuya fecha de entrega ha sido al menos dos días antes de la fecha esperada.</h3>
-• Utilizando la función ADDDATE de MySQL.
-• Utilizando la función DATEDIFF de MySQL.
-• ¿Sería posible resolver esta consulta utilizando el operador de suma + o resta -?
+<ul>
+<li>Utilizando la función ADDDATE de MySQL.</li>
+<li>Utilizando la función DATEDIFF de MySQL.</li>
+<li>¿Sería posible resolver esta consulta utilizando el operador de suma + o resta -?</li>
+</ul>
 <h3>11. Devuelve un listado de todos los pedidos que fueron rechazados en 2009.</h3>
